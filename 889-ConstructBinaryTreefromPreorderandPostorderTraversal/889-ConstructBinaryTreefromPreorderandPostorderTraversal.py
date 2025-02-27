@@ -1,3 +1,9 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def constructFromPrePost(self, pre: List[int], post: List[int]) -> Optional[TreeNode]:
         index = [0]  # Mutable index to track preorder position
@@ -20,4 +26,4 @@ class Solution:
             root.left = self.construct(pre, post, index, l, i)
             root.right = self.construct(pre, post, index, i + 1, h - 1)
 
-        return root
+        return root     
