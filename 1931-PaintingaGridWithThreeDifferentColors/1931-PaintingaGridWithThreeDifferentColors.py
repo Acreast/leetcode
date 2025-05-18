@@ -1,10 +1,7 @@
-# Last updated: 5/18/2025, 8:32:37 PM
-from functools import lru_cache
-
-MOD = 10 ** 9 + 7
-
+# Last updated: 5/18/2025, 8:34:16 PM
 class Solution:
     def colorTheGrid(self, m: int, n: int) -> int:
+        MOD = 10 ** 9 + 7
         def generate_valid_rows(m):
             result = []
 
