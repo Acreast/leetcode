@@ -1,4 +1,4 @@
-# Last updated: 5/31/2025, 11:38:30 PM
+# Last updated: 5/31/2025, 11:42:47 PM
 class Solution:
     def snakesAndLadders(self, board: List[List[int]]) -> int:
         length = len(board)
