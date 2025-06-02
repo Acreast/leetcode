@@ -1,4 +1,4 @@
-# Last updated: 6/2/2025, 12:24:22 PM
+# Last updated: 6/2/2025, 12:24:36 PM
 class Solution:
     def candy(self, ratings: List[int]) -> int:
         candies = [1] * len(ratings)
