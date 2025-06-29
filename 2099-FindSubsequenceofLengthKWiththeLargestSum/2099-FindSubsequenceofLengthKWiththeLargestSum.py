@@ -1,4 +1,4 @@
-# Last updated: 6/29/2025, 10:43:25 PM
+# Last updated: 6/29/2025, 10:44:22 PM
 class Solution:
     def maxSubsequence(self, nums: List[int], k: int) -> List[int]:
         nums_map = [(num, i) for i, num in enumerate(nums)]
