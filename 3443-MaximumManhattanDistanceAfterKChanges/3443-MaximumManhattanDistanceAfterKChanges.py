@@ -1,4 +1,4 @@
-# Last updated: 6/29/2025, 11:10:12 PM
+# Last updated: 6/29/2025, 11:10:41 PM
 class Solution:
     def maxDistance(self, s: str, k: int) -> int:
         x, y = 0, 0
