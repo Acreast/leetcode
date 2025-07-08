@@ -1,19 +1,19 @@
-# Last updated: 7/8/2025, 9:53:04 PM
+# Last updated: 7/8/2025, 10:17:29 PM
 class Solution:
-    def maxEvents(self, events: List[List[int]]) -> int:
-        n = len(events)
-        max_day= max(event[1] for event in events)
+    def maxValue(self, events: List[List[int]], k: int) -> int:
         events.sort()
-        pq = []
-        res, j = 0, 0
-        for i in range(1, max_day + 1):
-            while j < n and events[j][0] <= i:
-                heapq.heappush(pq, events[j][1])
-                j += 1
-            while pq and pq[0] < i:
-                heapq.heappop(pq)
-            if pq:
-                heapq.heappop(pq)
-                res += 1
-        return res
+        n = len(events)
+        starting_points = [start for start, end, value in events]
+        dp = [[-1] * n for _ in range(k + 1)]
+
+        def dfs(cur_index, count):
+            if count == 0 or cur_index ==  n:
+                return 0
+            if dp[count][cur_index] != -1:
+                return dp[count][cur_index]
             
+            next_index = bisect_right(starting_points, events[cur_index][1])
+            dp[count][cur_index] = max(dfs(cur_index + 1, count), events[cur_index][2] + dfs(next_index, count - 1))
+            return dp[count][cur_index]
+        
+        return dfs(0, k)
