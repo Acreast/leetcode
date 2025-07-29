@@ -1,20 +1,19 @@
-# Last updated: 7/28/2025, 8:45:15 PM
+# Last updated: 7/29/2025, 11:33:07 PM
 class Solution:
-    def countMaxOrSubsets(self, nums: List[int]) -> int:
-        max_or = 0
-        for n in nums:
-            max_or = max_or | n
+    def smallestSubarrays(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        res = [0] * n
+        last = [-1] * 30
+
+        for i in range(n -1, -1, -1):
+            x = nums[i]
+            j = i
+
+            for b in range(30):
+                if (x >> b) & 1:
+                    last[b] = i
+                if last[b] != -1:
+                    j = max(last[b], j)
+            res[i] = j - i + 1
         
-
-        res = 0
-        def dfs(i, cur_or):
-            nonlocal res, max_or
-            if i == len(nums):
-                res += 1 if cur_or == max_or else 0
-                return
-            
-            dfs(i + 1, cur_or)
-            dfs(i + 1, cur_or | nums[i])
-        dfs(0, 0)
-
         return res
