@@ -1,4 +1,4 @@
-# Last updated: 8/10/2025, 6:55:07 PM
+# Last updated: 8/10/2025, 6:55:50 PM
 class Solution:
     def reorderedPowerOf2(self, n: int) -> bool:
         def generate_numbers(n):
@@ -10,7 +10,7 @@ class Solution:
                     num = int(''.join(perm))
                     seen.add(num)
 
-            return sorted(seen)
+            return seen
         
 
         num_set = generate_numbers(n)
