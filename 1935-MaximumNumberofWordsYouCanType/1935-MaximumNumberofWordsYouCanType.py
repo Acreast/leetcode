@@ -1,4 +1,4 @@
-# Last updated: 9/15/2025, 10:47:30 PM
+# Last updated: 9/15/2025, 10:48:07 PM
 class Solution:
     def canBeTypedWords(self, text: str, brokenLetters: str) -> int:
         
@@ -9,6 +9,7 @@ class Solution:
             for c in brokenLetters:
                 if c in word:
                     has_broken = True
+                    break
             
             if not has_broken:
                 res += 1
