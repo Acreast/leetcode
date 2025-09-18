@@ -1,34 +1,30 @@
-# Last updated: 9/17/2025, 10:55:22 PM
-from sortedcontainers import SortedSet
+# Last updated: 9/19/2025, 12:10:05 AM
+class TaskManager(object):
+    def __init__(self, tasks):
+        self.heap = []
+        self.taskPriority = {}
+        self.taskOwner = {}
+        for t in tasks:
+            self.add(t[0], t[1], t[2])
 
-class FoodRatings:
+    def add(self, userId, taskId, priority):
+        heapq.heappush(self.heap, (-priority, -taskId))
+        self.taskPriority[taskId] = priority
+        self.taskOwner[taskId] = userId
 
-    def __init__(self, foods: List[str], cuisines: List[str], ratings: List[int]):
-        self.cuisine_food_map = defaultdict(SortedSet)
-        self.cuisines = {}
-        self.ratings = {}
+    def edit(self, taskId, newPriority):
+        heapq.heappush(self.heap, (-newPriority, -taskId))
+        self.taskPriority[taskId] = newPriority
 
-        for i in range(len(foods)):
-            self.cuisine_food_map[cuisines[i]].add((-ratings[i], foods[i]))
-            self.cuisines[foods[i]] = cuisines[i]
-            self.ratings[foods[i]] = ratings[i]
+    def rmv(self, taskId):
+        self.taskPriority[taskId] = -1
 
-    def changeRating(self, food: str, newRating: int) -> None:
-        cuisine = self.cuisines[food]
-        rating = self.ratings[food]
-
-        self.cuisine_food_map[cuisine].remove((-rating, food))
-        self.cuisine_food_map[cuisine].add((-newRating, food))
-
-        self.ratings[food] = newRating
-        
-
-    def highestRated(self, cuisine: str) -> str:
-        return self.cuisine_food_map[cuisine][0][1]
-        
-
-
-# Your FoodRatings object will be instantiated and called as such:
-# obj = FoodRatings(foods, cuisines, ratings)
-# obj.changeRating(food,newRating)
-# param_2 = obj.highestRated(cuisine)
+    def execTop(self):
+        while self.heap:
+            negp, negid = heapq.heappop(self.heap)
+            p = -negp
+            tid = -negid
+            if self.taskPriority.get(tid, -2) == p:
+                self.taskPriority[tid] = -1
+                return self.taskOwner.get(tid, -1)
+        return -1
