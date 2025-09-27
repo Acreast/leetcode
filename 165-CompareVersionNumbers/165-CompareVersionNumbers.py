@@ -1,4 +1,4 @@
-# Last updated: 9/27/2025, 9:09:03 PM
+# Last updated: 9/27/2025, 9:09:38 PM
 class Solution:
     def compareVersion(self, version1: str, version2: str) -> int:
         ver_arr1 = version1.split(".")
