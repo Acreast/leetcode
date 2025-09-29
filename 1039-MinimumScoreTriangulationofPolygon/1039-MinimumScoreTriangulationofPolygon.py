@@ -1,5 +1,19 @@
-# Last updated: 9/29/2025, 11:46:55 PM
+# Last updated: 9/29/2025, 11:48:52 PM
 class Solution:
+    '''
+    The recursive approach with memoization works as follows:
+    Base case:
+    If i+1=j
+        There are only two vertices, so no triangle can be formed.
+            Return 0.
+
+    Memoization check:
+        If we've already computed dp[i][j]
+            Return the cached result.
+
+    Try all possible middle vertices:
+        For each k where i<k<j:
+    '''
     def minScoreTriangulation(self, values: List[int]) -> int:
         dp = [[0] * 50 for _ in range(50)]
         
