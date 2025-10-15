@@ -1,6 +1,6 @@
-# Last updated: 10/14/2025, 10:33:18 PM
+# Last updated: 10/15/2025, 11:03:44 PM
 class Solution:
-    def hasIncreasingSubarrays(self, nums: List[int], k: int) -> bool:
+    def maxIncreasingSubarrays(self, nums: List[int]) -> int:
         size = 1
         prev_size = 0
         best = 0
@@ -17,9 +17,6 @@ class Solution:
 
             best = max(best, split_case, adjacent_case)
 
-            if best >= k:
-                return True
-        return False
-
-
-
+            
+        return best
+        
