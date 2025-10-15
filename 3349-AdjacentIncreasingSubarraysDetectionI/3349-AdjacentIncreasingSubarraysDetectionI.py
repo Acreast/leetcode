@@ -1,4 +1,4 @@
-# Last updated: 10/15/2025, 11:03:44 PM
+# Last updated: 10/15/2025, 11:09:10 PM
 class Solution:
     def maxIncreasingSubarrays(self, nums: List[int]) -> int:
         size = 1
@@ -13,10 +13,9 @@ class Solution:
             
             split_case = size // 2
 
-            adjacent_case = min(prev_size, size)
+            adjacent_case = min(size, prev_size)
 
             best = max(best, split_case, adjacent_case)
-
-            
+        
         return best
         
