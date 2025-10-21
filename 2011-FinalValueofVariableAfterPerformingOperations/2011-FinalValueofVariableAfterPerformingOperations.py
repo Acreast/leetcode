@@ -1,11 +1,21 @@
-# Last updated: 10/20/2025, 8:28:39 PM
+# Last updated: 10/22/2025, 12:04:43 AM
 class Solution:
-    def finalValueAfterOperations(self, operations: List[str]) -> int:
-        res = 0
-        for op in operations:
-            if op == "--X" or op == "X--":
-                res -= 1
-            else:
-                res += 1
+    def maxFrequency(self, nums: List[int], k: int, numOperations: int) -> int:
+        maxVal = max(nums) + k + 2
+        count = [0] * maxVal
 
+        for v in nums:
+            count[v] += 1
+
+        for i in range(1, maxVal):
+            count[i] += count[i - 1]
+        
+        res = 0
+        for i in range(maxVal):
+            left = max(0, i - k)
+            right = min(maxVal - 1, i + k)
+            total = count[right] - (count[left - 1] if left else 0)
+            freq = count[i] - (count[i - 1] if i else 0)
+            res = max(res, freq + min(numOperations, total - freq))
+        
         return res
