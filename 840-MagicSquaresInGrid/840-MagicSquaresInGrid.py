@@ -1,47 +1,50 @@
-# Last updated: 12/30/2025, 10:48:01 PM
+# Last updated: 12/31/2025, 9:29:48 PM
 1class Solution:
-2    def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
-3        
-4        def is_magic(i, j):
-5            unique_integers = set()
-6            row_sum = [0] * 3
-7            col_sum = [0] * 3
-8
-9            for row in range(i - 1, i + 2):
-10                for col in range(j - 1, j + 2):
-11                    value = grid[row][col]
-12                    if value < 1 or value > 9:
-13                        return False
-14                    
-15                    if value in unique_integers:
-16                        return False
-17                    else:
-18                        unique_integers.add(value)
-19                        
-20                    row_sum[row-i + 1] += value
-21                    col_sum[col-j + 1] += value
-22
-23            if unique_integers != set(range(1, 10)):
-24                return False
-25            
-26            for sum in row_sum:
-27                if sum != 15: return False
-28            for sum in col_sum:
-29                if sum != 15: return False
-30                    
-31            return (
-32                grid[i-1][j-1] + grid[i+1][j+1] == 10 and
-33                grid[i+1][j-1] + grid[i-1][j+1] == 10
-34            )
-35
-36        r, c = len(grid), len(grid[0])
-37
-38        if r < 3 or c < 3:
-39            return 0
-40        
-41        count = 0
-42        for i in range(1, r - 1):
-43            for j in range(1, c - 1):
-44                if grid[i][j] == 5 and is_magic(i, j):
-45                    count += 1
-46        return count
+2    def latestDayToCross(self, row: int, col: int, cells: List[List[int]]) -> int:
+3        def canCross(day):
+4            grid = [[0] * col for _ in range(row)]
+5            
+6            for i in range(day):
+7                r, c = cells[i][0] - 1, cells[i][1] - 1
+8                grid[r][c] = 1
+9
+10            queue = deque()
+11            visited = [[False] * col for _ in range(row)]
+12            
+13            for c in range(col):
+14                if grid[0][c] == 0:
+15                    queue.append((0, c))
+16                    visited[0][c] = True
+17
+18            neighbors = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+19
+20            while queue:
+21
+22                r , c = queue.popleft()
+23                if r == row - 1:
+24                    return True
+25                
+26                for dr, dc in neighbors:
+27                    nr, nc = r + dr, c + dc
+28                    
+29                    if 0 <= nr < row and 0 <= nc < col and \
+30                       not visited[nr][nc] and grid[nr][nc] == 0:
+31                        visited[nr][nc] = True
+32                        queue.append((nr, nc))
+33            return False
+34
+35        res = 0
+36
+37        l = 1
+38        r = len(cells)
+39
+40        while l <= r:
+41            day = (l + r) // 2
+42
+43            if canCross(day):
+44                res = day
+45                l = day + 1
+46            else:
+47                r = day - 1
+48        
+49        return res
