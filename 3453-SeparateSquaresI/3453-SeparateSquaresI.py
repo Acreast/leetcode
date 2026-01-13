@@ -1,4 +1,4 @@
-# Last updated: 1/14/2026, 12:27:22 AM
+# Last updated: 1/14/2026, 12:28:16 AM
 1class Solution:
 2    def separateSquares(self, squares: List[List[int]]) -> float:
 3        l = float('inf')
@@ -25,6 +25,6 @@
 24            else:
 25                r = mid
 26        
-27        return mid
+27        return l
 28
 29            
