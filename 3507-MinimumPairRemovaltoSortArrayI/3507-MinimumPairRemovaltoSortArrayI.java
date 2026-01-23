@@ -1,4 +1,4 @@
-// Last updated: 1/23/2026, 12:29:27 AM
+// Last updated: 1/24/2026, 12:25:31 AM
 1class Solution {
 2    public int minPair(List<Integer> v) {
 3        int minSum = (int)1e9;
