@@ -1,16 +1,17 @@
-// Last updated: 1/24/2026, 12:20:32 PM
+// Last updated: 1/25/2026, 3:27:21 PM
 1import java.lang.Math;
-2
-3class Solution {
-4    public int minPairSum(int[] nums) {
-5        Arrays.sort(nums);
-6        int res = 0;
-7        int n = nums.length;
-8
-9        for (int i = 0; i < n/2; i++) {
-10            res = Math.max(res, nums[i] + nums[n - i - 1]);
-11        }
-12
-13        return res;
-14    }
-15}
+2class Solution {
+3    public int minimumDifference(int[] nums, int k) {
+4        if (nums.length < k) {
+5            return 0;
+6        }
+7        int res = Integer.MAX_VALUE;
+8        int j = k - 1;
+9        Arrays.sort(nums);
+10        for (int i = 0; i + j < nums.length; i ++) {
+11            res = Math.min(res, (nums[i + j] - nums[i]));
+12        }
+13
+14        return res;
+15    }
+16}
