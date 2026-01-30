@@ -1,47 +1,65 @@
-// Last updated: 1/30/2026, 1:01:02 AM
-1import java.util.Arrays;
-2
-3class Solution {
-4    public long minimumCost(String source, String target, 
-5char[] original, char[] changed, int[] cost) {
-6        long[][] dist = new long[26][26];
-7        long INF = Long.MAX_VALUE / 2;
+// Last updated: 1/31/2026, 1:14:19 AM
+1class Solution {
+2    static final long INF = Long.MAX_VALUE;
+3    public long minimumCost(String source, String target,
+4                            String[] original, String[] changed, int[] cost) {
+5
+6        Map<String, Integer> id = new HashMap<>();
+7        Set<Integer> lens = new HashSet<>();
 8
-9        for (long[] row : dist) {
-10            Arrays.fill(row, INF);
-11        }
-12        for (int i = 0; i < 26; i++) {
-13            dist[i][i] = 0;
-14        }
+9        int sz = 0;
+10        int m = original.length;
+11        int n = source.length();
+12
+13        long[][] dist = new long[201][201];
+14        for (long[] row : dist) Arrays.fill(row, INF);
 15
-16        for (int i = 0; i < original.length; i++) {
-17            int u = original[i] - 'a';
-18            int v = changed[i] - 'a';
-19            dist[u][v] = Math.min(dist[u][v], cost[i]);
-20        }
-21
-22        for (int k = 0; k < 26; k++) {
-23            for (int i = 0; i < 26; i++) {
-24                if (dist[i][k] == INF) continue;
-25                for (int j = 0; j < 26; j++) {
-26                    if (dist[k][j] != INF) {
-27                        dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
-28                    }
-29                }
-30            }
-31        }
-32
-33        long totalCost = 0;
-34        int n = source.length();
-35
-36        for (int i = 0; i < n; i++) {
-37            int u = source.charAt(i) - 'a';
-38            int v = target.charAt(i) - 'a';
-39            if (u == v) continue;
-40            if (dist[u][v] == INF) return -1;
-41            totalCost += dist[u][v];
-42        }
-43
-44        return totalCost;
-45    }
-46}
+16        for (int i = 0; i < m; i++) {
+17            if (!id.containsKey(original[i])) {
+18                id.put(original[i], sz++);
+19                lens.add(original[i].length());
+20            }
+21            if (!id.containsKey(changed[i])) {
+22                id.put(changed[i], sz++);
+23            }
+24            int u = id.get(original[i]);
+25            int v = id.get(changed[i]);
+26            dist[u][v] = Math.min(dist[u][v], cost[i]);
+27        }
+28
+29        for (int i = 0; i < sz; i++) dist[i][i] = 0;
+30
+31        for (int k = 0; k < sz; k++)
+32            for (int i = 0; i < sz; i++)
+33                if (dist[i][k] != INF)
+34                    for (int j = 0; j < sz; j++)
+35                        if (dist[k][j] != INF)
+36                            dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+37
+38        long[] dp = new long[n + 1];
+39        Arrays.fill(dp, INF);
+40        dp[0] = 0;
+41
+42        for (int i = 0; i < n; i++) {
+43            if (dp[i] == INF) continue;
+44
+45            if (source.charAt(i) == target.charAt(i))
+46                dp[i + 1] = Math.min(dp[i + 1], dp[i]);
+47
+48            for (int L : lens) {
+49                if (i + L > n) continue;
+50
+51                String s = source.substring(i, i + L);
+52                String t = target.substring(i, i + L);
+53
+54                if (id.containsKey(s) && id.containsKey(t)) {
+55                    long d = dist[id.get(s)][id.get(t)];
+56                    if (d != INF)
+57                        dp[i + L] = Math.min(dp[i + L], dp[i] + d);
+58                }
+59            }
+60        }
+61
+62        return dp[n] == INF ? -1 : dp[n];
+63    }
+64}
