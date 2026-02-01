@@ -1,4 +1,4 @@
-// Last updated: 1/31/2026, 11:40:37 PM
+// Last updated: 2/1/2026, 11:33:02 PM
 1class Solution {
 2    public char nextGreatestLetter(char[] letters, char target) {
 3        for(char c : letters) {
