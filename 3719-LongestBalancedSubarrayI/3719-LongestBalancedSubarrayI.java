@@ -1,24 +1,33 @@
-// Last updated: 2/10/2026, 11:54:44 PM
+// Last updated: 2/12/2026, 12:15:37 AM
 1class Solution {
 2    public int longestBalanced(int[] nums) {
-3        int res = 0;
+3        int n = nums.length;
 4
-5        for (int i = 0; i < nums.length; i ++) {
-6            HashSet<Integer> even = new HashSet<>();
-7            HashSet<Integer> odd = new HashSet<>();
-8
-9            for (int j = i; j < nums.length; j ++) {
-10                if (nums[j] % 2 == 0) {
-11                    even.add(nums[j]);
-12                } else {
-13                    odd.add(nums[j]);
-14                }
-15                if (even.size() == odd.size()) {
-16                    res = Math.max(res, j - i + 1);
-17                }
-18            }
-19        }
+5        int[] balance = new int[n]; // first-occurrence markers for current l
+6        HashMap<Integer, Integer> first = new HashMap<>(); // val -> first occurrence idx
+7
+8        int result = 0;
+9        for (int l = n - 1; l >= 0; l--) {
+10            int x = nums[l];
+11
+12            // If x already had a first occurrence to the right, remove that old marker.
+13            Integer oldpos = first.get(x);
+14            if (oldpos != null)
+15                balance[oldpos] = 0;
+16
+17            // Now x becomes first occurrence at l.
+18            first.put(x, l);
+19            balance[l] = ((x & 1) == 0) ? 1 : -1;
 20
-21        return res;
-22    }
-23}
+21            // Find rightmost r >= l such that sum(balance[l..r]) == 0
+22            int s = 0;
+23            for (int r = l; r < n; r++) {
+24                s += balance[r];
+25                if (s == 0)
+26                    result = Math.max(result, r - l + 1);
+27            }
+28        }
+29
+30        return result;
+31    }
+32}
