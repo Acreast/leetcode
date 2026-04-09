@@ -1,4 +1,4 @@
-// Last updated: 4/8/2026, 11:07:28 PM
+// Last updated: 4/9/2026, 8:30:06 PM
 1class Solution {
 2    public int xorAfterQueries(int[] nums, int[][] queries) {
 3        int MOD = (int)1e9+7, n = nums.length, m = queries.length;
