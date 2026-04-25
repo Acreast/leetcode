@@ -1,4 +1,4 @@
-// Last updated: 4/25/2026, 11:42:19 PM
+// Last updated: 4/25/2026, 11:42:37 PM
 1class Solution {
 2    public int furthestDistanceFromOrigin(String moves) {
 3        int n = moves.length();
