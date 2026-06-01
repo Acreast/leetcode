@@ -1,16 +1,22 @@
-// Last updated: 6/1/2026, 12:12:57 AM
+// Last updated: 6/1/2026, 8:57:43 PM
 1class Solution {
-2    public boolean asteroidsDestroyed(int mass, int[] asteroids) {
-3        Arrays.sort(asteroids);
-4        long cur_mass = mass;
-5        for (int i = 0; i < asteroids.length; i ++) {
-6            if (asteroids[i] > cur_mass) {
-7                return false;
-8            } else {
-9                cur_mass += asteroids[i];
-10            }
-11        } 
-12
-13        return true;
-14    }
-15}
+2    public int minimumCost(int[] cost) {
+3        int res = 0;
+4        Arrays.sort(cost);
+5        
+6        
+7        int count = 0;
+8        
+9        
+10        for (int i = cost.length - 1; i >= 0; i--) {
+11            count++;
+12            if (count == 3) {
+13                
+14                count = 0;
+15                continue;
+16            }
+17            res += cost[i];
+18        }
+19        return res;
+20    }
+21}
