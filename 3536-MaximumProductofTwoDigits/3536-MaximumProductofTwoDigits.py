@@ -1,10 +1,16 @@
-# Last updated: 7/26/2026, 1:44:23 AM
+# Last updated: 7/26/2026, 1:45:56 AM
 1class Solution:
 2    def maxProduct(self, n: int) -> int:
-3        num_arr = []
-4        for c in str(n):
-5            num_arr.append(c)
-6        
-7        num_arr.sort()
-8
-9        return int(num_arr[-1]) * int(num_arr[-2])
+3        max1 = max2 = 0
+4        
+5        while n > 0:
+6            digit = n % 10
+7            n //= 10
+8            
+9            if digit > max1:
+10                max2 = max1
+11                max1 = digit
+12            elif digit > max2:
+13                max2 = digit
+14                
+15        return max1 * max2
