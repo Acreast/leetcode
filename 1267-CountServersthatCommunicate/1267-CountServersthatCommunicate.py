@@ -1,18 +1,12 @@
-class Solution:
-    def countServers(self, grid: List[List[int]]) -> int:
-        ROWS, COLS = len(grid), len(grid[0])
-        rows = [0] * ROWS
-        cols = [0] * COLS 
-        for r in range(ROWS):
-            for c in range(COLS):
-                if grid[r][c] == 1:
-                    rows[r] += 1
-                    cols[c] += 1
-        
-        res = 0
-        for r in range(ROWS):
-            for c in range(COLS):
-                if grid[r][c] and max(rows[r], cols[c]) > 1:
-                    res += 1
-
-        return res
+# Last updated: 11/9/2026, 1:34:09 AM
+1class Solution:
+2    def countServers(self, grid: list[list[int]]) -> int:
+3        rows = [sum(row) for row in grid]  # servers on each row
+4        cols = [sum(col) for col in zip(*grid)]  # servers on each column
+5
+6        ans = 0
+7        for i, row in enumerate(grid):
+8            for j, server in enumerate(row):
+9                if server and rows[i] + cols[j] > 2:  # it's counted in both, so more than 2 means company
+10                    ans += 1
+11        return ans
